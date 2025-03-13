@@ -2,7 +2,7 @@
 // - import useNavigate from react router
 // - Update the onClick handler such that clicking on a bot card will navigate the user to /robots/:id where :id is the id of the current bot
 // - Do NOT use a <Link> component to accomplish this. Use the `useNavigate` hook instead.
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import BotClassIcon from "./BotClassIcon";
 
 const BotCard = ({ robot }) => {
