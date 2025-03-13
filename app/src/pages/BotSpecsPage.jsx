@@ -14,6 +14,6 @@ const BotSpecsPage = () => {
       <GoHomeButton />
     </main>
   );
-}
+};
 
 export default BotSpecsPage;
