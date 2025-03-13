@@ -1,28 +1,44 @@
 // This component is shown at /robots/${id}
-// TODO: 
+// TODO:
 // 1. pull the id value from the URL
 // 2. make state for fetching the robot (and the error)
 // 3. use the getRobotById adapter in useEffect, re-fetching each time the id changes
 // 4. Update the rendered component to include the fetched robot's data
-//     - img alt
-//     - img src
-//     - name
-//     - catchphrase
-//     - robot class ("Assault", "Defender", or "Support")
-//     - robot class Icon
-//     - health
-//     - damage
-//     - armor
-// 5. if an error occurs, render <CouldNotLoadData /> instead
-// 6. if no robot is found, render <NotFoundPage /> instead
+//     - img alt ✅
+//     - img src ✅
+//     - name ✅
+//     - catchphrase ✅
+//     - robot class ("Assault", "Defender", or "Support") ✅
+//     - robot class Icon ✅
+//     - health ✅
+//     - damage ✅
+//     - armor ✅
+// 5. if an error occurs, render <CouldNotLoadData /> instead ✅
+// 6. if no robot is found, render <NotFoundPage /> instead ✅
 
-import NotFoundPage from '../pages/NotFoundPage';
-import CouldNotLoadData from './CouldNotLoadData';
-import BotClassIcon from './BotClassIcon';
-import { getRobotById } from '../adapters/robotAdapters';
-import { useState, useEffect } from 'react';
+import NotFoundPage from "../pages/NotFoundPage";
+import CouldNotLoadData from "./CouldNotLoadData";
+import BotClassIcon from "./BotClassIcon";
+import { getRobotById } from "../adapters/robotAdapters";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const BotSpecs = () => {
+  const { id } = useParams();
+  const [robot, setRobot] = useState(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const fetchRobot = async () => {
+      const [data, error] = await getRobotById(id);
+      if (data) setRobot(data);
+      if (error) setError(true);
+    };
+    fetchRobot();
+  }, [id]);
+
+  if (!robot) return <NotFoundPage />;
+  if (error) return <CouldNotLoadData />;
 
   return (
     <div className="ui segment">
@@ -30,19 +46,19 @@ const BotSpecs = () => {
         <div className="row">
           <div className="four wide column">
             <img
-              alt="Robot Name"
+              alt={robot.name}
               className="ui medium circular image bordered"
-              src="Robot Avatar"
+              src={robot.avatar_url}
             />
           </div>
           <div className="four wide column">
-            <h2>Name: Robot Name</h2>
+            <h2>Name: {robot.name}</h2>
             <p>
               <strong>Catchphrase: </strong>
-              Robot Catchphrase
+              {robot.catchphrase}
             </p>
             <strong>
-              Class: Assault {BotClassIcon("Assault")}
+              Class: {robot.bot_class} {BotClassIcon(robot.bot_class)}
             </strong>
             <br />
             <div className="ui segment">
@@ -50,15 +66,15 @@ const BotSpecs = () => {
                 <div className="row">
                   <div className="column">
                     <i className="icon large circular red heartbeat" />
-                    <strong>Robot Health</strong>
+                    <strong>Robot Health {robot.health}</strong>
                   </div>
                   <div className="column">
                     <i className="icon large circular yellow lightning" />
-                    <strong>Robot Damage</strong>
+                    <strong>Robot Damage {robot.damage}</strong>
                   </div>
                   <div className="column">
                     <i className="icon large circular blue shield" />
-                    <strong>Robot Armor</strong>
+                    <strong>Robot Armor {robot.armor}</strong>
                   </div>
                 </div>
               </div>
@@ -67,7 +83,7 @@ const BotSpecs = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default BotSpecs;

@@ -5,10 +5,11 @@ web application's routing structure.
 */
 
 /* eslint-disable no-unused-vars */
-import BotSpecsPage from './pages/BotSpecsPage'
-import NotFoundPage from './pages/NotFoundPage'
-import BotPage from './pages/BotsPage'
-
+import BotSpecsPage from "./pages/BotSpecsPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import BotsPage from "./pages/BotsPage";
+import { Route, Routes } from "react-router-dom";
+import styles from "./App.css";
 // TODO: import Routes and Route
 
 const App = () => {
@@ -19,9 +20,13 @@ const App = () => {
 
   return (
     <div className="App">
-      <BotPage />
+      <Routes>
+        <Route path="/" element={<BotsPage />} />
+        <Route path="/robots/:id" element={<BotSpecsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
