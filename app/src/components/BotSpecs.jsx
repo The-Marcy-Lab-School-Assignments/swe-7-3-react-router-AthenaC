@@ -25,15 +25,24 @@ import { useParams } from "react-router-dom";
 
 const BotSpecs = () => {
   const { id } = useParams();
-  const [robot, setRobot] = useState("");
-  const [error, setError] = useState(null);
+  const [robot, setRobot] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    const [data, err] = getRobotById(id);
-    if (err) setError(<CouldNotLoadData />);
-    if (!data) setRobot(<NotFoundPage />);
-    setRobot(data);
+    const fetchRobot = async () => {
+      try {
+        const data = await getRobotById(id);
+        data ? setRobot(data) : setRobot(null);
+      } catch {
+        setError(true);
+      }
+    };
+
+    fetchRobot();
   }, [id]);
+
+  if (error) return <CouldNotLoadData />;
+  if (robot === null) return <NotFoundPage />;
 
   return (
     <div className="ui segment">
