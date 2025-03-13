@@ -9,6 +9,7 @@ import BotSpecsPage from "./pages/BotSpecsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import BotsPage from "./pages/BotsPage";
 import { Route, Routes } from "react-router-dom";
+import styles from "./App.css";
 // TODO: import Routes and Route
 
 const App = () => {

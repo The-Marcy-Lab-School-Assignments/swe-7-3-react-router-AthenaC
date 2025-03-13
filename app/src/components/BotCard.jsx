@@ -18,6 +18,7 @@ const BotCard = ({ robot }) => {
       <div className="image">
         <img alt={robot.name} src={robot.avatar_url} />
       </div>
+
       <div className="content">
         <div className="header">
           {robot.name} {BotClassIcon(robot.bot_class)}
@@ -27,6 +28,7 @@ const BotCard = ({ robot }) => {
           <small>{robot.catchphrase}</small>
         </div>
       </div>
+
       <div className="extra content">
         <span>
           <i className="icon heartbeat" />
