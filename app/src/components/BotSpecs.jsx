@@ -30,19 +30,15 @@ const BotSpecs = () => {
 
   useEffect(() => {
     const fetchRobot = async () => {
-      try {
-        const data = await getRobotById(id);
-        data ? setRobot(data) : setRobot(null);
-      } catch {
-        setError(true);
-      }
+      const [data, error] = await getRobotById(id);
+      if (data) setRobot(data);
+      if (error) setError(true);
     };
-
     fetchRobot();
   }, [id]);
 
+  if (!robot) return <NotFoundPage />;
   if (error) return <CouldNotLoadData />;
-  if (robot === null) return <NotFoundPage />;
 
   return (
     <div className="ui segment">

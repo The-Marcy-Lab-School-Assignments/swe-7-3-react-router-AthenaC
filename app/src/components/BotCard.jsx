@@ -10,7 +10,7 @@ const BotCard = ({ robot }) => {
 
   const handleClick = () => {
     console.log(`take me to robot ${robot.id}`);
-    navigate(`/robots/:${robot.id}`);
+    navigate(`/robots/${robot.id}`);
   };
 
   return (
